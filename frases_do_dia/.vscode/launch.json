@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "frases_do_dia",
+            "cwd": "frases_do_dia",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "Android",
+            "cwd": "frases_do_dia",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "deviceId": "RQ8M90EGVSD"
+        },
+        {
+            "name": "frases_do_dia (profile mode)",
+            "cwd": "frases_do_dia",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "frases_do_dia (release mode)",
+            "cwd": "frases_do_dia",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
