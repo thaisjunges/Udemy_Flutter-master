@@ -1,7 +1,6 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 
@@ -9,7 +8,7 @@ class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
@@ -19,25 +18,25 @@ class _HomeState extends State<Home> {
   Future<File> _getFile() async {
     //CHAMA O METODO QUE RETORNA O OBJ DIRECTORY QUE MOSTRA O CAMINHO DO PARA SALVAR O ARQUIVO
     final diretorio = await getApplicationDocumentsDirectory();
-    //CRIANDO ARQUIVO VAZIO CHAMADO "DADOS" PARA RECUPERAR O DIRETORIO
-    return File("${diretorio.path}daddos.json/");
+    //PARA RECUPERAR OS DADOS DO DIRETORIO
+    return File("${diretorio.path}/dados.json");
   }
 
   //PEGA A LISTA DE TAREFAS E SALVA NO ARQUIVO
   _salvarArquivo() async {
     var arquivo = await _getFile();
+
     //CRIAR DADOS
     Map<String, dynamic> tarefa = Map();
-    tarefa["titulo"] = "Tomar café";
+    tarefa["titulo"] = "Ir ao mercado";
     tarefa["realizada"] = false;
     _listaTarefas.add(tarefa);
 
     //SALVANDO LISTA INTEIRA
     String dados = json.encode(_listaTarefas);
     arquivo.writeAsString(dados);
-    /*if (kDebugMode) {
-      print("Caminho: ${diretorio.path}");
-    }*/
+
+    //print("Caminho: " + diretorio.path );
   }
 
   _lerArquivo() async {
@@ -64,16 +63,16 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     //_salvarArquivo();
-    if (kDebugMode) {
-      print(("items:$_listaTarefas"));
-    }
+    print("itens: " + _listaTarefas.toString());
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Lista de Tarefas"),
-        backgroundColor: const Color.fromARGB(255, 118, 14, 136),
+        title: const Text("Lista de tarefas"),
+        backgroundColor: Colors.purple,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
           backgroundColor: Colors.purple,
           onPressed: () {
             showDialog(
@@ -86,35 +85,33 @@ class _HomeState extends State<Home> {
                           const InputDecoration(labelText: "Digite sua tarefa"),
                       onChanged: (text) {},
                     ),
-                    actions: [
+                    actions: <Widget>[
                       ElevatedButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text("Cancelar")),
+                        child: const Text("Cancelar"),
+                        onPressed: () => Navigator.pop(context),
+                      ),
                       ElevatedButton(
-                          //SALVAR
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("Salvar"))
+                        child: const Text("Salvar"),
+                        onPressed: () {
+                          //salvar
+
+                          Navigator.pop(context);
+                        },
+                      )
                     ],
                   );
                 });
-          },
-          child: const Icon(Icons.add)),
+          }),
       body: Column(
-        children: [
+        children: <Widget>[
           Expanded(
             child: ListView.builder(
-              //PEGANDO TODO O TAMANHO DA LISTA
-              itemCount: _listaTarefas.length,
-              //CONMSTRUINDO O ITEM PARA FAZER A EXIBIXÇÃO DE CADA ITEM
-              itemBuilder: (BuildContext context, index) {
-                return ListTile(
-                  //ACESSANDO O INDICE DO ITEM
-                  title: Text(_listaTarefas[index]),
-                );
-              },
-            ),
+                itemCount: _listaTarefas.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(_listaTarefas[index]['titulo']),
+                  );
+                }),
           )
         ],
       ),
